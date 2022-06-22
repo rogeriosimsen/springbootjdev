@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="/materialize.min.css"  media="screen,projection"/>
+
+	<title>SPRING BOOT</title>
+</head>
+
+<body>
+	<h3>Spring Boot + Thymeleaf + Material Design</h3><br/>
+	<h5>CADASTRO PESSOA</h5>
+	
+	<div class="row">
+		<form action="salvarpessoa" method="post" th:object="${pessoaobj}" class="col s12" id="formPessoa">
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="id" class="active">ID: </label>
+					<input name="id" th:field="*{id}" readonly="readonly" id="id" class="validate">
+				</div>
+				
+				<div class="input-field col s6">
+					<label for="nome" class="active">Nome: </label>
+					<input name="nome" th:field="*{nome}" id="nome" class="validate">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="sobrenome" class="active">Sobrenome: </label>
+					<input name="sobrenome" th:field="*{sobrenome}" id="sobrenome" class="validate">
+				</div>
+				
+				<div class="input-field col s6">
+					<label for="idade" class="active">Idade: </label>
+					<input name="idade" th:field="*{idade}" id="idade" class="validate">
+				</div>
+			</div>	
+			
+			<div class="row">
+				<div class="input-field col s6">
+					<input class="waves-effect waves-light btn" type="submit" value="Salvar">
+					<button class="waves-effect waves-light btn" onclick="document.getElementById('formPessoa').reset();">Novo</button>
+				</div>
+			</div>
+			
+		</form>
+	</div>
+	
+	<br/>
+	
+	<div class="row">
+		<form action="pesquisapornome" method="post">
+			<div class="row">
+				<div class="input-field col s12">
+					<label for="nomepesquisa" class="active">Pesquisa por nome: </label>
+					<input name="nomepesquisa" id="nompesquisa" class="validate">
+					<input class="waves-effect waves-light btn" type="submit" value="Buscar">
+					<a href="/listapessoas" class="waves-effect waves-light btn">Listar pessoas</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Nome</th>
+				<th>Sobrenome</th>
+				<th>Idade</th>
+			</tr>
+		</thead>
+		<tr th:each = "pessoa : ${pessoas}">
+			<td th:text = "${pessoa.id}"> </td>
+			<td th:text = "${pessoa.nome}"></td>
+			<td th:text = "${pessoa.sobrenome}"></td>
+			<td th:text = "${pessoa.idade}"></td>
+			<td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Editar</a></td>
+			<td><a th:href="@{/excluirpessoa/{idpessoa}(idpessoa=${pessoa.id})}">Excluir</a></td> 
+		</tr>
+	</table>
+	
+	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
+</body>
+
+</html>
